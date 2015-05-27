@@ -125,7 +125,7 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
                 <p>
 
                 <label for="fullname">Full Name*    
-                  <input id="fullname" type="text" name="fullname" value="" />
+                  <input id="fullname" type="text" name="fullname" value="" required/>
                 </label>
                 </p>
                 
@@ -134,7 +134,7 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
             <p>
 
               <label for="email">Email *
-                <input id="email" type="text" name="email" value="" />
+                <input id="email" type="email" name="email" value="" required>
               </label>
             </p>
                 

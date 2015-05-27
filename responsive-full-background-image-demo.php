@@ -147,7 +147,7 @@ function MM_validateForm() { //v4.0
   </form>
 
   <div class="login-help">
-    <a href="responsive-singn up form.php">Register</a> • <a href="#">Forgot Password</a>
+    <a href="responsive-sign up form.php">Register</a> • <a href="#">Forgot Password</a>
   </div>
 </div>
 

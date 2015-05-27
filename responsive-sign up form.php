@@ -85,13 +85,15 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
   <!-- responsive-full-background-image.css stylesheet contains the code you want -->
   <link rel="stylesheet" href="responsive-full-background-image.css">
   <!---------- CSS ------------>
-  <link rel="stylesheet" type="text/css" href="./css/style.css">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
   <link href="SpryAssets/SpryValidationConfirm.css" rel="stylesheet" type="text/css">
+  <link href="SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css">
   
   <!-- Not required: jquery.min.js and presentational-only.js is only used to demonstrate scrolling behavior of the viewport  -->
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="presentational-only/presentational-only.js"></script>
 <script src="SpryAssets/SpryValidationConfirm.js" type="text/javascript"></script>
+<script src="SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
 </head>
 
 
@@ -106,7 +108,7 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
         
         	<div class="clearfix" id="header" style="text-align:center;">
         	
-        		<img id="signup-icon" src="./images/signup.png" alt="" />
+        		<img id="signup-icon" src="images/signup.png" alt="" />
         		<h2>Sign Up</h2>
 
             
@@ -131,12 +133,11 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
                 
                 
                 
-            <p>
-
-              <label for="email">Email *
-                <input id="email" type="email" name="email" value="" required>
-              </label>
-            </p>
+            <p><span id="sprytextfield4">
+            <label for="email2">Email *
+              <input id="email2" type="text" name="email" value="" required>
+            </label><br>
+            <span class="textfieldRequiredMsg">Required.</span><span class="textfieldInvalidFormatMsg">Invalid format.</span></span></p>
                 
             <p>
               <label for="pobox">Po Box
@@ -158,14 +159,13 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
               </p>
                 
                 
-            <p>
-
-              <label for="phone">Phone              
-                <input id="phone" type="text" name="phone" value="" />
-              </label>
-            </p>
+            <p><span id="sprytextfield3">
+            <label for="phone">Phone
+              <input id="phone" type="text" name="phone" value="" />
+            </label><br>
+            <span class="textfieldRequiredMsg">A value is required.</span><span class="textfieldInvalidFormatMsg">Invalid format.</span></span></p>
                 <p>
-                <label for="password">Password                
+                <label for="password">Password
                   <input type="password" name="password" id="password">
                 </label>
                 <br>
@@ -173,8 +173,8 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
                 <span id="spryconfirm1">
                 <label for="confirmpassword">ConfirmPassword
                   <input type="password" name="confirmpassword" id="confirmpassword">
-                </label>
-                <span class="confirmRequiredMsg">A value is required.</span><span class="confirmInvalidMsg">The values don't match.</span></span></p>
+                </label><br>
+            <span class="confirmRequiredMsg">A value is required.</span><span class="confirmInvalidMsg">Values Unmatch.</span></span></p>
                 
                 
                 
@@ -214,8 +214,12 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
       
    
 <script type="text/javascript">
-var spryconfirm1 = new Spry.Widget.ValidationConfirm("spryconfirm1", "password");
-    </script>
+var spryconfirm1 = new Spry.Widget.ValidationConfirm("spryconfirm1", "password", {validateOn:["change"]});
+var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1");
+var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2");
+var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "phone_number", {format:"phone_custom", pattern:"0000000000", validateOn:["blur"]});
+var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "email", {validateOn:["blur"]});
+</script>
 </body>
 </html>
 <?php

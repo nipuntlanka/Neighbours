@@ -2,11 +2,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8">
+<meta http-equiv="refresh" content="3;URL=index.php" />
 <title>Neighbours</title>
   <link rel='stylesheet' href='http://codepen.io/assets/libs/fullpage/jquery-ui.css'>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  
-
   <meta name="author" content="Neighbours">
   <meta name="description" content="Neighbours social network">
   <meta charset="UTF-8">
@@ -37,10 +36,7 @@
       
       
   </section>
-  <form action="responsive-full-background-image-demo.php" name="form1" target="_self" id="form1">
-    <input type="submit" name="goBack" id="goBack" value="Submit" />
-  </form>
-  </header>
+</header>
 
 
 

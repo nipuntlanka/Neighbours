@@ -1,0 +1,267 @@
+@charset "utf-8";
+/* Simple fluid media
+   Note: Fluid media requires that you remove the media's height and width attributes from the HTML
+   http://www.alistapart.com/articles/fluid-images/ 
+*/
+img, object, embed, video {
+	max-width: 100%;
+}
+/* IE 6 does not support max-width so default to width 100% */
+.ie6 img {
+	width:100%;
+}
+
+/*
+	Dreamweaver Fluid Grid Properties
+	----------------------------------
+	dw-num-cols-mobile:		5;
+	dw-num-cols-tablet:		8;
+	dw-num-cols-desktop:	12;
+	dw-gutter-percentage:	15;
+	
+	Inspiration from "Responsive Web Design" by Ethan Marcotte 
+	http://www.alistapart.com/articles/responsive-web-design
+	
+	and Golden Grid System by Joni Korpi
+	http://goldengridsystem.com/
+*/
+
+/* Mobile Layout: 480px and below. */
+
+.gridContainer {
+	margin-left: auto;
+	margin-right: auto;
+	width: 88.626%;
+	padding-left: 1.1869%;
+	padding-right: 1.1869%;
+	background-attachment: scroll;
+	background-image: url(../images/mobile_background-photo.jpg);
+	background-repeat: no-repeat;
+	background-position: center top;
+	background-color: #666;
+}
+#header {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	font-size: 24px;
+}
+#description {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#login_box {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#footer {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	padding-top: 5px;
+	padding-right: 10px;
+	padding-bottom: 5px;
+	padding-left: 5px;
+}
+#footer1 {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	background-color: #CCC;
+	border-bottom-width: thick;
+	border-bottom-style: double;
+	border-left-style: none;
+}
+#footer2 {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	background-color: #CCC;
+	border-bottom-width: thick;
+	border-bottom-style: double;
+}
+#footer3 {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	background-color: #CCC;
+	border-bottom-width: thick;
+	border-bottom-style: double;
+}
+
+/* Tablet Layout: 481px to 768px. Inherits styles from: Mobile Layout. */
+
+@media only screen and (min-width: 481px) {
+.gridContainer {
+	width: 91.4836%;
+	padding-left: 0.7581%;
+	padding-right: 0.7581%;
+	background-attachment: fixed;
+	background-image: url(../images/background-photo.jpg);
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+#header {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	text-align: center;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	font-size: larger;
+}
+#description {
+	clear: both;
+	float: left;
+	margin-left: 25.4143%;
+	width: 49.1712%;
+	display: block;
+}
+#login_box {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#footer {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	background-color: #666;
+}
+#footer1 {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	background-color: #CCC;
+}
+#footer2 {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	background-color: #CCC;
+}
+#footer3 {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	background-color: #CCC;
+}
+}
+
+/* Desktop Layout: 769px to a max of 1232px.  Inherits styles from: Mobile Layout and Tablet Layout. */
+
+@media only screen and (min-width: 769px) {
+.gridContainer {
+	max-width: 100%;
+	margin: 1px;
+	padding: 0px;
+	width: 99%;
+}
+#header {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	text-align: center;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	font-size: larger;
+	vertical-align: middle;
+}
+#description {
+	clear: both;
+	float: left;
+	margin-left: 8.4249%;
+	width: 83.1501%;
+	display: block;
+	text-align: center;
+	font-size: 18px;
+	color: #000;
+	font-weight: bold;
+	font-family: "Comic Sans MS", cursive;
+	vertical-align: middle;
+	padding: 10px;
+}
+#login_box {
+	clear: both;
+	float: left;
+	margin-left: 8.4249%;
+	width: 83.1501%;
+	display: block;
+}
+#footer {
+	clear: both;
+	float: left;
+	margin-left: 0;
+	width: 100%;
+	display: block;
+	background-color: #666;
+}
+#footer1 {
+	clear: none;
+	float: left;
+	margin-left: 9.5238%;
+	width: 24.1758%;
+	display: block;
+	background-color: #CCC;
+}
+#footer2 {
+	clear: none;
+	float: left;
+	margin-left: 1.0989%;
+	width: 32.6007%;
+	display: block;
+	background-color: #CCC;
+}
+#footer3 {
+	clear: none;
+	float: left;
+	margin-left: 1.0989%;
+	width: 24.1758%;
+	display: block;
+	background-color: #CCC;
+}
+}
+.gridContainer.clearfix #header h1 {
+	font-size: 36px;
+	text-align: center;
+	font-family: "Comic Sans MS", cursive;
+	color: #CCCCCC;
+}

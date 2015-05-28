@@ -141,12 +141,13 @@ body {
 	font-size: 30px;
 	line-height: 23px;
 	text-transform: uppercase;
-	color: #101010;
+	color: #F00;
 	margin-top: 300px;
 	margin-right: 0px;
 	margin-bottom: 0px;
 	margin-left: 0px;
 	top: 0px;
+	font-family: Roboto, sans-serif;
 }
 
 

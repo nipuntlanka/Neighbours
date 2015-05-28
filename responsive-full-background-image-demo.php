@@ -51,7 +51,7 @@ if (isset($_POST['user'])) {
   $MM_redirecttoReferrer = false;
   mysql_select_db($database_My_Con, $My_Con);
   
-  $LoginRS__query=sprintf("SELECT Username, Password FROM users WHERE Username=%s AND Password=%s",
+  $LoginRS__query=sprintf("SELECT Email, Password FROM users WHERE Email=%s AND Password=%s",
     GetSQLValueString($loginUsername, "text"), GetSQLValueString($password, "text")); 
    
   $LoginRS = mysql_query($LoginRS__query, $My_Con) or die(mysql_error());
@@ -73,12 +73,6 @@ if (isset($_POST['user'])) {
     header("Location: ". $MM_redirectLoginFailed );
   }
 }
-/**
-$action = $_POST["1fail"];
-if($action=="1fail"){
-	echo "error";
-	}
-**/
 ?>
 <!doctype html>
 <html lang="en">

@@ -215,8 +215,6 @@ $totalRows_Recordset1 = mysql_num_rows($Recordset1);
    
 <script type="text/javascript">
 var spryconfirm1 = new Spry.Widget.ValidationConfirm("spryconfirm1", "password", {validateOn:["change"]});
-var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1");
-var sprytextfield2 = new Spry.Widget.ValidationTextField("sprytextfield2");
 var sprytextfield3 = new Spry.Widget.ValidationTextField("sprytextfield3", "phone_number", {format:"phone_custom", pattern:"0000000000", validateOn:["blur"]});
 var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "email", {validateOn:["blur"]});
 </script>

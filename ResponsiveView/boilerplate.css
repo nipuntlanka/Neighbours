@@ -42,6 +42,10 @@ body {
 	margin: 0;
 	font-size: larger;
 	line-height: 1.231;
+	float: left;
+	width: 100%;
+	text-align: left;
+	color: #000;
 }
 
 body, button, input, select, textarea {
@@ -176,7 +180,9 @@ button, input, select, textarea {
 	margin: 0;
 	vertical-align: baseline;
 
-*vertical-align: middle; 		background-color: #FFF;
+
+
+*vertical-align: middle; 				background-color: #FFF;
 }
 
 /*

@@ -7,22 +7,28 @@ input {
 	text-align: center;
 	
 }
-form { 
-	margin: 20px 0 0 0;
+form {
+	text-align: left;
+	float: left;
+	margin-top: 20px;
+	margin-right: 0;
+	margin-bottom: 0;
+	margin-left: 0;
     
 }
-input, textarea { 
-	background: none repeat scroll 0 0 #FFFFFF; 
-	border: 1px #C9C9C9; 
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset, -5px -5px 0 0 #F5F5F6, 5px 5px 0 0 #F5F5F6, 5px 0 0 0 #F5F5F6, 0 5px 0 0 #F5F5F6, 5px -5px 0 0 #F5F5F6, -5px 5px 0 0 #F5F5F6; 
-	color: #000000; 
-	padding: 2px; 
-	font-size: 14px; 
-	border-radius: 1px 1px 1px 1px; 
+input, textarea {
+	background: none repeat scroll 0 0 #FFFFFF;
+	border: 1px #C9C9C9;
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15) inset, -5px -5px 0 0 #F5F5F6, 5px 5px 0 0 #F5F5F6, 5px 0 0 0 #F5F5F6, 0 5px 0 0 #F5F5F6, 5px -5px 0 0 #F5F5F6, -5px 5px 0 0 #F5F5F6;
+	color: #000000;
+	padding: 2px;
+	font-size: 14px;
+	border-radius: 1px 1px 1px 1px;
 	background-color: rgba(255, 255, 255, 0.6);
-	text-align:left;
-	float:right;
-	margin-right:25px;
+	text-align: left;
+	float: right;
+	margin-right: 25px;
+	width: 40%;
 	
 
 	}
@@ -61,7 +67,7 @@ a:hover {
 	color: #f26525 
 }
 #signup-form {
-	width: 400px;
+	width: 100%;
 	margin-top: 50px;
 	margin-bottom: 50px;
 	background: rgba(255, 255, 255, 0.5);
@@ -70,6 +76,7 @@ a:hover {
 	border: 2px solid #000000;
 	margin-right: auto;
 	margin-left: auto;
+	float: left;
 
 }
 #signup-icon { 
@@ -117,10 +124,14 @@ h3 {
 	display: none; 
 } /* End Clearfix _NO__DOTCOMMA__AFTER__*/
 
-#header { 
-	margin: 0 0 30px 0; 
-	border-bottom: 1px solid #efefef; 
-	text-align:center;
+#header {
+	border-bottom: 1px solid #efefef;
+	text-align: center;
+	width: 100%;
+	margin-top: 0;
+	margin-right: 0;
+	margin-bottom: 30px;
+	margin-left: 0;
 }
 #send p { 
 	margin-bottom: 20px 
@@ -133,7 +144,8 @@ textarea {
 }
 **/
 #required p{
-	font-size:10px;
+	font-size: 10px;
+	color: #FF0000;
 }
 #apply { 
 	border-top: 1px solid #efefef; 
@@ -149,7 +161,6 @@ form label {
 	font-size: 12px;
 	width: 100px;
 	float: none;
-	text-align: left;
 	
 	
 	

@@ -84,7 +84,7 @@ if (isset($_POST['user'])) {
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Neighbours HOME</title>
+<title>Neighbours Home</title>
 <link href="ResponsiveView/boilerplate.css" rel="stylesheet" type="text/css">
 <link href="css/homeLayout.css" rel="stylesheet" type="text/css">
 <link href="SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css">
@@ -132,10 +132,10 @@ Do the following if you're using your customized build of modernizr (http://www.
     </form>
 
   <div class="login-help">
-    <p><a href="responsive-sign up form.php">Register</a> • <a href="#">Forgot Password</a></p>
+    <p><a href="loginForm.php">Register</a> • <a href="#">Forgot Password</a></p>
   </div>
   </div>
- 
+ <!--footer---------------------------------------->
   <div id="footer">
     <hr style="border-width:2px">
     <div id="footer1">
@@ -158,7 +158,7 @@ Do the following if you're using your customized build of modernizr (http://www.
     </div>
    
   </div>
-
+<!--footer END-->
 </div>
 <script type="text/javascript">
 var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "email", {validateOn:["blur"]});

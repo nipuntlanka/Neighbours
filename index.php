@@ -30,6 +30,12 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
   return $theValue;
 }
 }
+
+mysql_select_db($database_My_Con, $My_Con);
+$query_userAuthenticate = "SELECT * FROM users";
+$userAuthenticate = mysql_query($query_userAuthenticate, $My_Con) or die(mysql_error());
+$row_userAuthenticate = mysql_fetch_assoc($userAuthenticate);
+$totalRows_userAuthenticate = mysql_num_rows($userAuthenticate);
 ?>
 <?php
 // *** Validate request to login to this site.
@@ -119,9 +125,9 @@ Do the following if you're using your customized build of modernizr (http://www.
   </div>
   <p>&nbsp;</p>
   <div id="login_box">
-      <form ACTION="<?php echo $loginFormAction; ?>" METHOD="POST" id="form0">
+    <form ACTION="<?php echo $loginFormAction; ?>" METHOD="POST" id="login">
         <p><span id="sprytextfield1">
-          <input name="user" type="text" id="user" placeholder="Username"><br>
+          <input name="user" type="text" id="user" placeholder="Email"><br>
         <span class="textfieldRequiredMsg">A value is required.</span><span class="textfieldInvalidFormatMsg">Invalid format.</span></span></p>
         <p>
           <input name="pass" type="password" id="pass" placeholder="Password">
@@ -162,6 +168,14 @@ Do the following if you're using your customized build of modernizr (http://www.
 </div>
 <script type="text/javascript">
 var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "email", {validateOn:["blur"]});
+
+function errorSubmit(){
+	alert("Wrong Username or Password???");
+	
+	}
   </script>
 </body>
 </html>
+<?php
+mysql_free_result($userAuthenticate);
+?>

@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_getLoca" value="name:User_ID;datatype:int,name:fullname;datatype:string,name:Email;datatype:string,name:Password;datatype:string,name:Phone;datatype:int,name:pobox;datatype:string,name:street;datatype:string,name:city;datatype:string" />
+</info>

@@ -40,25 +40,12 @@ html { font-size: 100%; overflow-y: scroll; -webkit-text-size-adjust: 100%; -ms-
 
 body {
 	margin: 0;
-	font-size: larger;
-	line-height: 1;
-	float: left;
-	width: 100%;
-	text-align: left;
-	color: #000;
-	
+	font-size: 13px;
+	line-height: 1.231;
+	text-align: center;
 }
 
-body, button, input, select, textarea {
-	font-family: sans-serif;
-	color: #222;
-	border-top-style: none;
-	border-right-style: none;
-	border-bottom-style: none;
-	border-left-style: none;
-	text-align: center;
-	background-color: #FFF;
-}
+body, button, input, select, textarea { font-family: sans-serif; color: #222; }
 
 /* 
  * Remove text-shadow in selection highlight: h5bp.com/i
@@ -161,10 +148,7 @@ form { margin: 0; }
 fieldset { border: 0; margin: 0; padding: 0; }
 
 /* Indicate that 'label' will shift focus to the associated form element */
-label {
-	cursor: pointer;
-	float: left;
-}
+label { cursor: pointer; }
 
 /* 
  * 1. Correct color not inheriting in IE6/7/8/9 
@@ -179,15 +163,7 @@ legend { border: 0; *margin-left: -7px; padding: 0; }
  * 3. Define consistent vertical alignment display in all browsers
  */
 
-button, input, select, textarea {
-	font-size: 100%;
-	margin: 0;
-	vertical-align: baseline;
-
-
-
-*vertical-align: middle; 				background-color: #FFF;
-}
+button, input, select, textarea { font-size: 100%; margin: 0; vertical-align: baseline; *vertical-align: middle; }
 
 /*
  * 1. Define line-height as normal to match FF3/4 (set using !important in the UA stylesheet)
@@ -304,18 +280,6 @@ td { vertical-align: top; }
   tr, img { page-break-inside: avoid; }
   img { max-width: 100% !important; }
   @page { margin: 0.5cm; }
-  p, h2, h3 {
-	orphans: 3;
-	widows: 3;
-	text-align: center;
-	height: 300px;
-}
-  h2, h3 {
-	page-break-after: avoid;
-	text-align: center;
-	vertical-align: middle;
-}
-}
-.gridContainer.clearfix #description h2 {
-	font-family: "Comic Sans MS", cursive;
+  p, h2, h3 { orphans: 3; widows: 3; }
+  h2, h3 { page-break-after: avoid; }
 }

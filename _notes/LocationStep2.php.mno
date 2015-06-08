@@ -1,0 +1,4 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<info>
+	<infoitem key="UD_getCurrGrps" value="name:grp_id;datatype:int,name:grp_name;datatype:string,name:lat;datatype:real,name:long;datatype:real,name:grp_radius;datatype:real,name:no_of_members;datatype:int" />
+</info>

@@ -31,58 +31,7 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 }
 }
 
-mysql_select_db($database_My_Con, $My_Con);
-$query_userAuthenticate = "SELECT * FROM users";
-$userAuthenticate = mysql_query($query_userAuthenticate, $My_Con) or die(mysql_error());
-$row_userAuthenticate = mysql_fetch_assoc($userAuthenticate);
-$totalRows_userAuthenticate = mysql_num_rows($userAuthenticate);
-?>
-<?php
-// *** Validate request to login to this site.
-if (!isset($_SESSION)) {
-  session_start();
-}
 
-$loginFormAction = $_SERVER['PHP_SELF'];
-if (isset($_GET['accesscheck'])) {
-  $_SESSION['PrevUrl'] = $_GET['accesscheck'];
-}
-
-
-
-if (isset($_POST['user'])) {
-	$encPass = $_POST['pass'];
-	$compPass = md5($encPass);
-  $loginUsername=$_POST['user'];
-  $password=$compPass;
-  $MM_fldUserAuthorization = "";
-  $MM_redirectLoginSuccess = "profile.php";
-  $MM_redirectLoginFailed = "index.php";
-  $MM_redirecttoReferrer = false;
-  mysql_select_db($database_My_Con, $My_Con);
-  
-  $LoginRS__query=sprintf("SELECT Email, Password FROM users WHERE Email=%s AND Password=%s",
-    GetSQLValueString($loginUsername, "text"), GetSQLValueString($password, "text")); 
-   
-  $LoginRS = mysql_query($LoginRS__query, $My_Con) or die(mysql_error());
-  $loginFoundUser = mysql_num_rows($LoginRS);
-  if ($loginFoundUser) {
-     $loginStrGroup = "";
-    
-	if (PHP_VERSION >= 5.1) {session_regenerate_id(true);} else {session_regenerate_id();}
-    //declare two session variables and assign them
-    $_SESSION['MM_Username'] = $loginUsername;
-    $_SESSION['MM_UserGroup'] = $loginStrGroup;	      
-
-    if (isset($_SESSION['PrevUrl']) && false) {
-      $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
-    }
-    header("Location: " . $MM_redirectLoginSuccess );
-  }
-  else {
-    header("Location: ". $MM_redirectLoginFailed );
-  }
-}
 ?>
 <!doctype html>
 <!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
@@ -96,7 +45,7 @@ if (isset($_POST['user'])) {
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Neighbours Home</title>
 <link href="ResponsiveView/boilerplate.css" rel="stylesheet" type="text/css">
-<link href="css/homeLayout.css" rel="stylesheet" type="text/css">
+<link href="css/homeLayout -forgot.css" rel="stylesheet" type="text/css">
 <link href="SpryAssets/SpryValidationTextField.css" rel="stylesheet" type="text/css">
 <!-- 
 To learn more about the conditional comments around the html tags at the top of the file:
@@ -111,6 +60,21 @@ Do the following if you're using your customized build of modernizr (http://www.
 <!--[if lt IE 9]>
 <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 <![endif]-->
+
+<style>
+#correctEmail{
+	color:green;
+	
+	}
+	
+#inCorrectEmail{
+	color:red;
+	
+	}
+
+</style>
+
+
 <script src="ResponsiveView/respond.min.js"></script>
 <script src="SpryAssets/SpryValidationTextField.js" type="text/javascript"></script>
 </head>
@@ -119,35 +83,67 @@ Do the following if you're using your customized build of modernizr (http://www.
   <div id="header">
     <h1>Neighbours Social Network  </h1>
   </div>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <p>&nbsp;</p>
-  <div id="description">
-    <h2>Join Us Now</h2>
-    <h2>It's Completely Free</h2>
-  </div>
-  <p>&nbsp;</p>
-  <div id="login_box">
-    <form ACTION="<?php echo $loginFormAction; ?>" METHOD="POST" id="login">
-        <p><span id="sprytextfield1">
-          <input name="user" type="text" id="user" placeholder="Email"><br>
-        <span class="textfieldRequiredMsg">A value is required.</span><span class="textfieldInvalidFormatMsg">Invalid format.</span></span></p>
-        <p>
-          <input name="pass" type="password" id="pass" placeholder="Password">
-        </p>
-        <p>
-          <input type="submit" name="login" class="login login-submit" value="login">
-        </p>
-    </form>
-
-  <div class="login-help">
-    <p><a href="loginForm.php">Register</a> • <a href="forgotPass.php">Forgot Password</a></p>
-  </div>
+ 
+  <div id="wrapper1"><div id="description">
+    <h2>Find Your Account</h2>
+    <h3>Enter your Email</h3>
   </div>
  
-  
+  <div id="login_box">
+    <form METHOD="POST" id="login">
+        <p><span id="sprytextfield1">
+          <input name="email" type="text" id="email" placeholder="Email"><br><br>
+       
+      
+          <input type="submit" id="login" name="login" class="login login-submit" value="Search">
+       
+          <input onClick="window.location.href='index.php'" type="button" name="cancel" value="Cancel">
+        
+        
+    </form>
 
+  
+  </div></div>
+
+ 
+  <div id="alertSec"><?php if (isset($_POST['login'])) {
+mysql_select_db($database_My_Con, $My_Con);
+$checkEmail = $_POST['email'];
+$query_emailAuth = "SELECT users.Email FROM users WHERE Email = '$checkEmail'";
+$emailAuth = mysql_query($query_emailAuth, $My_Con) or die(mysql_error());
+$row_emailAuth = mysql_fetch_assoc($emailAuth);
+$totalRows_emailAuth = mysql_num_rows($emailAuth);
+
+
+
+ if($totalRows_emailAuth){
+	 //send mail section
+	 
+	$email_from = 'rangaranasingha@gmail.com';//<== Put your email address here
+	$email_subject = "Change of Passwords";
+	$email_body = "Click <a href='https://www.google.lk/'>here to change your password";
+		
+		 
+	$to = $checkEmail;//<== Put your email address here
+	$headers = "From: $email_from \r\n";
+	 
+	//Send the email!
+	mail($to,$email_subject,$email_body,$headers);
+	 
+	 
+	 
+	 //display message
+	 echo "<div id='correctEmail'>Password reset link has been sent to your Email (".$to.") </div>";
+		 
+		 
+		 
+		 
+		 
+	 }else{
+		 echo "<div id='inCorrectEmail'>No such User!!!</div>";
+		 }
+
+}?></div>
 </div>
 <script type="text/javascript">
 var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "email", {validateOn:["blur"]});
@@ -166,6 +162,4 @@ alert("errorrrr");
   </script>
 </body>
 </html>
-<?php
-mysql_free_result($userAuthenticate);
-?>
+

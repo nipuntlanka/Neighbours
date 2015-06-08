@@ -37,9 +37,13 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "send")) {
+	$encPass = $_POST['password'];
+$sendEncPass = md5($encPass);
+	
+	
   $insertSQL = sprintf("INSERT INTO users (fullname, Password, Email, Phone, pobox, street, city) VALUES (%s, %s, %s, %s, %s, %s, %s)",
                        GetSQLValueString($_POST['fullname'], "text"),
-                       GetSQLValueString($_POST['password'], "text"),
+                       GetSQLValueString($sendEncPass, "text"),
                        GetSQLValueString($_POST['email'], "text"),
                        GetSQLValueString($_POST['phone'], "int"),
                        GetSQLValueString($_POST['pobox'], "text"),
@@ -200,30 +204,6 @@ Do the following if you're using your customized build of modernizr (http://www.
  </div>
 </div>
 
-<!--footer---------------------------------------->
-<div id="footer">
-    <hr style="border-width:2px">
-    <div id="footer1">
-      <p>Footer section 1;</p>
-      <p>&nbsp;</p>
-      <p>&nbsp;</p>
-      <p>&nbsp;</p>
-    </div>
-    <div id="footer2">
-      <p>&Footer section 2;</p>
-      <p>&nbsp;</p>
-      <p>&nbsp;</p>
-      <p>&nbsp;</p>
-    </div>
-    <div id="footer3">
-      <p>&Footer section 3;</p>
-      <p>&nbsp;</p>
-      <p>&nbsp;</p>
-      <p>&nbsp;</p>
-    </div>
-   
-  </div>
-<!--footer END-->
   
 </div>
 <script type="text/javascript">

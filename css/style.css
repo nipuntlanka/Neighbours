@@ -69,7 +69,6 @@ a:hover {
 #signup-form {
 	width: 100%;
 	margin-top: 50px;
-	margin-bottom: 50px;
 	background: rgba(255, 255, 255, 0.5);
 	padding: 0;
 	padding: 20px;
@@ -79,10 +78,10 @@ a:hover {
 	float: left;
 
 }
-#signup-icon { 
-	float: right; 
-	width: 48px; 
-	height: 48px; 
+#signup-icon {
+	float: right;
+	width: 48px;
+	height: 30px;
 }
 h1, h2, h3, h4, h5, h6 { 
 	margin: 0; 
@@ -117,8 +116,10 @@ h3 {
 .clearfix { 
 	display: inline-block 
 } /* Hide from IE Mac \*/
-.clearfix { 
-	display: block; 
+.clearfix {
+	display: block;
+	background-color: #666;
+	background-image: url(../images/background-photo.jpg);
 } /* End hide from IE Mac */
 .none { 
 	display: none; 

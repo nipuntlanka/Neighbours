@@ -1,0 +1,28 @@
+@charset "utf-8";
+
+/* Mobile Layout: 480px and below. */
+#map {
+	height: 60%;
+	width: 98%;
+}
+
+/* Tablet Layout: 481px to 768px. Inherits styles from: Mobile Layout. */
+
+@media only screen and (min-width: 481px) {
+	#map {
+	height: 75%;
+	width: 60%;
+}
+	
+	
+}
+
+/* Desktop Layout: 769px to a max of 1232px.  Inherits styles from: Mobile Layout and Tablet Layout. */
+
+@media only screen and (min-width: 769px) {
+		#map {
+	height: 80%;
+	width: 60%;
+}
+	
+}

@@ -1,5 +1,9 @@
 <?php require_once('Connections/My_Con.php'); ?>
 <?php
+// Start the session
+session_start();
+
+
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
@@ -37,6 +41,16 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "send")) {
+	/*send email & city variables via Session*/
+	
+	$_SESSION['email']=$_POST['email'];
+	$_SESSION['city']=$_POST['city'];
+	
+	/**/
+	
+	
+	
+	
 	$encPass = $_POST['password'];
 $sendEncPass = md5($encPass);
 	
@@ -53,7 +67,7 @@ $sendEncPass = md5($encPass);
   mysql_select_db($database_My_Con, $My_Con);
   $Result1 = mysql_query($insertSQL, $My_Con) or die(mysql_error());
 
-  $insertGoTo = "profile.php";
+  $insertGoTo = "getLocation_res.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];

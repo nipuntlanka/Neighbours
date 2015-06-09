@@ -37,6 +37,11 @@ $userAuthenticate = mysql_query($query_userAuthenticate, $My_Con) or die(mysql_e
 $row_userAuthenticate = mysql_fetch_assoc($userAuthenticate);
 $totalRows_userAuthenticate = mysql_num_rows($userAuthenticate);
 ?>
+
+
+
+
+
 <?php
 // *** Validate request to login to this site.
 if (!isset($_SESSION)) {
@@ -50,40 +55,10 @@ if (isset($_GET['accesscheck'])) {
 
 
 
-if (isset($_POST['user'])) {
-	$encPass = $_POST['pass'];
-	$compPass = md5($encPass);
-  $loginUsername=$_POST['user'];
-  $password=$compPass;
-  $MM_fldUserAuthorization = "";
-  $MM_redirectLoginSuccess = "profile.php";
-  $MM_redirectLoginFailed = "index.php";
-  $MM_redirecttoReferrer = false;
-  mysql_select_db($database_My_Con, $My_Con);
-  
-  $LoginRS__query=sprintf("SELECT Email, Password FROM users WHERE Email=%s AND Password=%s",
-    GetSQLValueString($loginUsername, "text"), GetSQLValueString($password, "text")); 
-   
-  $LoginRS = mysql_query($LoginRS__query, $My_Con) or die(mysql_error());
-  $loginFoundUser = mysql_num_rows($LoginRS);
-  if ($loginFoundUser) {
-     $loginStrGroup = "";
-    
-	if (PHP_VERSION >= 5.1) {session_regenerate_id(true);} else {session_regenerate_id();}
-    //declare two session variables and assign them
-    $_SESSION['MM_Username'] = $loginUsername;
-    $_SESSION['MM_UserGroup'] = $loginStrGroup;	      
 
-    if (isset($_SESSION['PrevUrl']) && false) {
-      $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
-    }
-    header("Location: " . $MM_redirectLoginSuccess );
-  }
-  else {
-    header("Location: ". $MM_redirectLoginFailed );
-  }
-}
 ?>
+
+
 <!doctype html>
 <!--[if lt IE 7]> <html class="ie6 oldie"> <![endif]-->
 <!--[if IE 7]>    <html class="ie7 oldie"> <![endif]-->
@@ -119,10 +94,14 @@ Do the following if you're using your customized build of modernizr (http://www.
   <div id="header">
     <h1>Neighbours Social Network  </h1>
   </div>
+  
+  <div id="ErrorDisplay" style="color:red;display:none"><p id="errorDis" name="errorDis"></p></div>
+  
   <p>&nbsp;</p>
   <p>&nbsp;</p>
   <p>&nbsp;</p>
   <p>&nbsp;</p>
+  
   <div id="description">
     <h2>Join Us Now</h2>
     <h2>It's Completely Free</h2>
@@ -153,17 +132,64 @@ Do the following if you're using your customized build of modernizr (http://www.
 var sprytextfield1 = new Spry.Widget.ValidationTextField("sprytextfield1", "email", {validateOn:["blur"]});
 
 function errorSubmit(){
-	alert("Wrong Username or Password???");
+		
+		document.getElementById("ErrorDisplay").style.display = "block";
+	   document.getElementById("errorDis").innerHTML = "TRY AGAIN !!!";
 	
-	}
-  </script>
-  
-  
-  <script type="text/javascript">
-function invalidPass(){
-alert("errorrrr");  
 }
+
+
+	
   </script>
+  
+  
+  
+ <?php 
+ if (isset($_POST['user'])) {
+	$encPass = $_POST['pass'];
+	$compPass = md5($encPass);
+  $loginUsername=$_POST['user'];
+  $password=$compPass;
+  $MM_fldUserAuthorization = "";
+  $MM_redirectLoginSuccess = "profile.php";
+  //$MM_redirectLoginFailed = "index.php";
+  $MM_redirecttoReferrer = false;
+  mysql_select_db($database_My_Con, $My_Con);
+  
+  $LoginRS__query=sprintf("SELECT Email, Password FROM users WHERE Email=%s AND Password=%s",
+    GetSQLValueString($loginUsername, "text"), GetSQLValueString($password, "text")); 
+   
+  $LoginRS = mysql_query($LoginRS__query, $My_Con) or die(mysql_error());
+  $loginFoundUser = mysql_num_rows($LoginRS);
+  if ($loginFoundUser) {
+     $loginStrGroup = "";
+    
+	if (PHP_VERSION >= 5.1) {session_regenerate_id(true);} else {session_regenerate_id();}
+    //declare two session variables and assign them
+    $_SESSION['MM_Username'] = $loginUsername;
+    $_SESSION['MM_UserGroup'] = $loginStrGroup;	      
+
+    if (isset($_SESSION['PrevUrl']) && false) {
+      $MM_redirectLoginSuccess = $_SESSION['PrevUrl'];	
+    }
+    header("Location: " . $MM_redirectLoginSuccess );
+  }
+  else {
+	 
+	  echo '<script type="text/javascript">
+	  	 
+	  window.errorSubmit();
+	
+
+
+</script>';
+	 
+    //header("Location: ". $MM_redirectLoginFailed );
+  }
+}
+ ?> 
+ 
+
 </body>
 </html>
 <?php

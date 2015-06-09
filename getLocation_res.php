@@ -1,5 +1,17 @@
 <?php require_once('Connections/My_Con.php'); ?>
 <?php
+// Start the session
+session_start();
+
+
+$email = $_SESSION['email'];
+$city = $_SESSION['city'];
+
+
+echo $email;
+echo $city;
+
+
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
@@ -75,6 +87,12 @@ $totalRows_getLoca = mysql_num_rows($getLoca);
 <script src="respond.min.js"></script>
 <script type="text/javascript">
 
+/*global variable define*/
+var city = <?php echo json_encode($city); ?>;
+var cenLat;
+var cenLong;
+
+
 function codeAddress() {
   var address = document.getElementById('address').value;
   geocoder.geocode( { 'address': address}, function(results, status) {
@@ -100,15 +118,39 @@ function codeAddress() {
 
 
     function load() {
+		/**/
+		var geocoder =  new google.maps.Geocoder();
+    geocoder.geocode( { 'address': city}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+			  cenLat = results[0].geometry.location.lat();
+			  cenLong = results[0].geometry.location.lng();
+			  
+			  loadMap(cenLat,cenLong);
+			  
+            //alert("location : " +city +" - "+ results[0].geometry.location.lat() + " " +results[0].geometry.location.lng()); 
+          } else {
+            alert("Something got wrong " + status);
+          }
+        });
+		/**/
+		
+		
+		
+		
+		
+		
+		
+	function loadMap(lat,long){	
+		
       var map = new google.maps.Map(document.getElementById("map"), {
-        center: new google.maps.LatLng(7.149154610187877,80.0600144412083),
+        center: new google.maps.LatLng(lat,long),
         zoom: 15,
         mapTypeId: 'roadmap'
       });
       var infoWindow = new google.maps.InfoWindow;
 	  
 	  
-	  
+	
 	  
 	  /********************draggable circle definition on map-canvas****************/
 	  
@@ -120,7 +162,7 @@ function codeAddress() {
 			  fillOpacity: 0.28,
 			  zIndex: 10,
 			  map: map,
-			  center: new google.maps.LatLng(7.149154610187877,80.0600144412083),
+			  center: new google.maps.LatLng(lat,long),
 			  radius: 200,
 			  editable: false,
 			  draggable: true,
@@ -156,9 +198,42 @@ function codeAddress() {
 		
 		  
 		  
-	
+	}
 	  
+	  /*************************   EVENT LISTNERS ********************************************************************/
+	   // Add an event listener on the cityCircle.
+		  google.maps.event.addListener(cityCircle, 'dragend', function(e){
+			 
+			 	
+				var locDetails1 = 'Center: '+ this.getCenter().toString();//+ '\n Bounds'+cityCircle.getBounds();
+				var locDetails2 = 'Radius: '+ this.getRadius();
+				document.getElementById("center_detail").value = locDetails1;
+				document.getElementById("bound_detail").value = locDetails2;
+				
+			
+				//event.stopPropagation();
+			  
+		  });
+		    // Add an event listener on the dy_marker.
+		  google.maps.event.addListener(dy_marker, 'dragend', function(e){
+			 
+			 	
+				var locDetails1 = 'Center: '+ cityCircle.getCenter().toString();//+ '\n Bounds'+cityCircle.getBounds();
+				var locDetails2 = 'Radius: '+ cityCircle.getRadius();
+				document.getElementById("center_detail").value = locDetails1;
+				document.getElementById("bound_detail").value = locDetails2;
+				
+			
+				//event.stopPropagation();
+			  
+		  });
+		  
+		  
 	  /****************************************************************************************************/
+	  
+	  
+	  
+	  
 	  
 	}
 
@@ -168,16 +243,17 @@ function codeAddress() {
 	   width:100%;
 	   padding:2px;
 	   }
-   #map {
-        height: 80%;
-		width: 75%;
-        margin-left:1%;
-        padding: 0px;
-		border:solid;
-		border-width:1px;
+   #maap {
+	height: 60%;
+	width: 98%;
+	margin-left: 1%;
+	padding: 0px;
+	border: solid;
+	border-width: 1px;
       }
 	</style>
-</head><body onload="load()">
+<link href="css/getLocation_ews.css" rel="stylesheet" type="text/css">
+</head><body onLoad="load()">
 <div class="gridContainer clearfix">
   <div id="header">
     <h1>Set Your Location</h1>
@@ -185,7 +261,7 @@ function codeAddress() {
   <div id="map"></div>
   <div id="geoAddress">
     <input id="address" type="textbox" value="">
-    <input type="button" value="Geocode" onclick="codeAddress()">
+    <input type="button" value="Geocode" onClick="codeAddress()">
     
     <script></script>
   </div>

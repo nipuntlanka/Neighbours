@@ -132,6 +132,7 @@ img, object, embed, video {
 	padding: 1.7581%;
 	background-color: #666;
 	background-image: url(../images/background-photo.jpg);
+	height: 80%;
 }
 #header {
 	clear: both;

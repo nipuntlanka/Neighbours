@@ -3,13 +3,14 @@
 // Start the session
 session_start();
 
-
 $email = $_SESSION['email'];
-$city = $_SESSION['city'];
+$city = $_SESSION['city'] . "srilanka";
 
 
 echo $email;
 echo $city;
+
+
 
 
 if (!function_exists("GetSQLValueString")) {
@@ -43,15 +44,42 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 }
 }
 
+$editFormAction = $_SERVER['PHP_SELF'];
+if (isset($_SERVER['QUERY_STRING'])) {
+  $editFormAction .= "?" . htmlentities($_SERVER['QUERY_STRING']);
+}
+
+if ((isset($_POST["MM_update"])) && ($_POST["MM_update"] == "formMain")) {
+	$_SESSION['currLat'] = $_POST['currLat'];
+	$_SESSION['currLong'] = $_POST['currLong'];
+	
+	
+  $updateSQL = sprintf("UPDATE users SET lat=%s, `long`=%s WHERE Email='$email'",
+                       GetSQLValueString($_POST['currLat'], "double"),
+                       GetSQLValueString($_POST['currLong'], "double"));
+
+  mysql_select_db($database_My_Con, $My_Con);
+  $Result1 = mysql_query($updateSQL, $My_Con) or die(mysql_error());
+
+  $updateGoTo = "checkGroup.php";
+  if (isset($_SERVER['QUERY_STRING'])) {
+    $updateGoTo .= (strpos($updateGoTo, '?')) ? "&" : "?";
+    $updateGoTo .= $_SERVER['QUERY_STRING'];
+  }
+  header(sprintf("Location: %s", $updateGoTo));
+}
+
+
+
 mysql_select_db($database_My_Con, $My_Con);
-$query_getLoca = "SELECT * FROM users WHERE users.Email='akila@gmail.com'";
-$getLoca = mysql_query($query_getLoca, $My_Con) or die(mysql_error());
-$row_getLoca = mysql_fetch_assoc($getLoca);
-$totalRows_getLoca = mysql_num_rows($getLoca);mysql_select_db($database_My_Con, $My_Con);
-$query_getLoca = "SELECT userlocation.lat, userlocation.`long`   FROM users, userlocation WHERE users.Email='akila@gmail.com'";
+
+$query_getLoca = "SELECT userlocation.lat, userlocation.long FROM userlocation INNER JOIN users ON users.User_ID=userlocation.User_ID WHERE users.Email = '$email';";
 $getLoca = mysql_query($query_getLoca, $My_Con) or die(mysql_error());
 $row_getLoca = mysql_fetch_assoc($getLoca);
 $totalRows_getLoca = mysql_num_rows($getLoca);
+
+
+
 
 
 ?>
@@ -65,11 +93,11 @@ $totalRows_getLoca = mysql_num_rows($getLoca);
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Untitled Document</title>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBiGk8WenReo5hdM4-hK7ppcvAnsCLQUdc"></script>
 
 <link href="boilerplate.css" rel="stylesheet" type="text/css">
-<link href="css/getLocation.css" rel="stylesheet" type="text/css">
+<link href="css/getLocation_ews.css" rel="stylesheet" type="text/css">
 <link href="css/homeLayout.css" rel="stylesheet" type="text/css">
 <!-- 
   To learn more about the conditional comments around the html tags at the top of the file:
@@ -86,23 +114,61 @@ $totalRows_getLoca = mysql_num_rows($getLoca);
   <![endif]-->
 <script src="respond.min.js"></script>
 <script type="text/javascript">
-
-/*global variable define*/
-var city = <?php echo json_encode($city); ?>;
-var cenLat;
-var cenLong;
-
+/**/
+var geocoder;
+var map;
+function initialize() {
+  geocoder = new google.maps.Geocoder();
+  var latlng = new google.maps.LatLng(cenLat,cenLong);
+  var mapOptions = {
+    zoom: 15,
+    center: latlng
+  }
+  map = new google.maps.Map(document.getElementById('map'), mapOptions);
+  
+  
+}
 
 function codeAddress() {
-  var address = document.getElementById('address').value;
+	initialize();
+	
+  var address = document.getElementById('address').value + "srilanka";
   geocoder.geocode( { 'address': address}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
       map.setCenter(results[0].geometry.location);
-	  map.setZoom(15);
+	  var currCenter = results[0].geometry.location;
+	  
+	   var image = {
+					url: 'images/marker.png',
+					// This marker is 20 pixels wide by 32 pixels tall.
+					size: new google.maps.Size(100, 100),
+					// The origin for this image is 0,0.
+					origin: new google.maps.Point(0,0),
+					// The anchor for this image is the base of the flagpole at 0,32.
+					anchor: new google.maps.Point(85,98)
+				  };
       var marker = new google.maps.Marker({
           map: map,
-          position: results[0].geometry.location
+          position: currCenter,
+		  icon: image,
+		  draggable:true
       });
+	  /*****************************************   EVENT LISTNERS   ****************************************************/
+	  	     // Add an event listener on the marker.
+		  google.maps.event.addListener(marker, 'drag', function(event){
+			
+			  var curLat = this.getPosition().lat();
+				var curLong = this.getPosition().lng();;
+				
+			 
+			 	setLatLong(curLat,curLong);
+			
+			
+				//event.stopPropagation();
+			  
+		  });
+	  setLatLong(currCenter.lat(),currCenter.lng());
+	
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
@@ -110,17 +176,32 @@ function codeAddress() {
 }
 
 
+/**/
+function setLatLong(lat,long){
+				document.getElementById("currLat").value = lat;
+				document.getElementById("currLong").value = long;
+				}
 
 
 
-
-
+/*global variable define*/
+var city = <?php echo json_encode($city); ?>;
+var cenLat;
+var cenLong;
 
 
     function load() {
-		/**/
-		var geocoder =  new google.maps.Geocoder();
-    geocoder.geocode( { 'address': city}, function(results, status) {
+
+			/**/
+	
+	geoCodeSet(city);
+	
+	
+		function geoCodeSet(addr){
+			
+			var geocoder =  new google.maps.Geocoder();
+		
+    		geocoder.geocode( { 'address': addr}, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
 			  cenLat = results[0].geometry.location.lat();
 			  cenLong = results[0].geometry.location.lng();
@@ -132,6 +213,7 @@ function codeAddress() {
             alert("Something got wrong " + status);
           }
         });
+		}
 		/**/
 		
 		
@@ -152,90 +234,66 @@ function codeAddress() {
 	  
 	
 	  
-	  /********************draggable circle definition on map-canvas****************/
+	  /********************draggable Marker definition on map-canvas****************/
 	  
-			   var circleOptions = {
-			  strokeColor: '#FF0000',
-			  strokeOpacity: 0.8,
-			  strokeWeight: 2,
-			  fillColor: '#FF0000',
-			  fillOpacity: 0.28,
-			  zIndex: 10,
-			  map: map,
-			  center: new google.maps.LatLng(lat,long),
-			  radius: 200,
-			  editable: false,
-			  draggable: true,
 			
-			  
-			};
-			
-			
-			// Add the circle for this city to the map.
-			cityCircle = new google.maps.Circle(circleOptions);	
-			cityCircle.setMap(map);
-			
-				var locDetails1 = 'Center: '+ cityCircle.getCenter().toString();//+ '\n Bounds'+cityCircle.getBounds();
-				var locDetails2 = 'Radius: '+ cityCircle.getRadius();
-				//document.getElementById("center_detail").value = locDetails1;
-				//document.getElementById("bound_detail").value = locDetails2;
-				
+		
 				//dynamic main marker define
+				  var image = {
+					url: 'images/marker.png',
+					// This marker is 20 pixels wide by 32 pixels tall.
+					size: new google.maps.Size(100, 100),
+					// The origin for this image is 0,0.
+					origin: new google.maps.Point(0,0),
+					// The anchor for this image is the base of the flagpole at 0,32.
+					anchor: new google.maps.Point(85,98)
+				  };
+				  
+				  var currCenter = new google.maps.LatLng(lat,long);
+				
 				var dy_marker = new google.maps.Marker({
 				map: map,
-				position:  cityCircle.getCenter(),
+				position:currCenter,
 				draggable:true,
+				icon: image,
 				zIndex:11,
 				
-				
-				
-				
 			  });
-			  cityCircle.bindTo('center', dy_marker, 'position');
-			  bindMainInfoWindow(dy_marker, map, infoWindow, adminLoc);
-			 
-		  
-		
-		  
-		  
-	}
-	  
-	  /*************************   EVENT LISTNERS ********************************************************************/
-	   // Add an event listener on the cityCircle.
-		  google.maps.event.addListener(cityCircle, 'dragend', function(e){
-			 
-			 	
-				var locDetails1 = 'Center: '+ this.getCenter().toString();//+ '\n Bounds'+cityCircle.getBounds();
-				var locDetails2 = 'Radius: '+ this.getRadius();
-				document.getElementById("center_detail").value = locDetails1;
-				document.getElementById("bound_detail").value = locDetails2;
-				
-			
-				//event.stopPropagation();
-			  
-		  });
+/*****************************************   EVENT LISTNERS   ****************************************************/
+	
 		    // Add an event listener on the dy_marker.
-		  google.maps.event.addListener(dy_marker, 'dragend', function(e){
-			 
-			 	
-				var locDetails1 = 'Center: '+ cityCircle.getCenter().toString();//+ '\n Bounds'+cityCircle.getBounds();
-				var locDetails2 = 'Radius: '+ cityCircle.getRadius();
-				document.getElementById("center_detail").value = locDetails1;
-				document.getElementById("bound_detail").value = locDetails2;
+		  google.maps.event.addListener(dy_marker, 'drag', function(event){
+			
+			  var curLat = this.getPosition().lat();
+				var curLong = this.getPosition().lng();;
 				
+			 
+			 	setLatLong(curLat,curLong);
+			
 			
 				//event.stopPropagation();
 			  
 		  });
+		  
+	
 		  
 		  
 	  /****************************************************************************************************/
-	  
-	  
-	  
-	  
-	  
+			  
+
+			  
+			  
+			  setLatLong(currCenter.lat(),currCenter.lng());
+			  
+			  bindMainInfoWindow(dy_marker, map, infoWindow, adminLoc);
+
+		  
 	}
+		
+}
+
+	
+
 
 </script>
 <style type="text/css">
@@ -259,12 +317,30 @@ function codeAddress() {
     <h1>Set Your Location</h1>
   </div>
   <div id="map"></div>
-  <div id="geoAddress">
-    <input id="address" type="textbox" value="">
-    <input type="button" value="Geocode" onClick="codeAddress()">
+<div id="submitSection">
+<form action="<?php echo $editFormAction; ?>" name="formMain" id="formMain" method="POST">
+<input type="text" id="currLat" name="currLat">
+<input type="text" id="currLong" name="currLong">
+<input type="submit" id="subToDb" name="subToDb">
+<input type="hidden" name="MM_update" value="formMain">
+</form>
+</div>
+<div id="geoAddress">
+  
+
+
+      <input name="address" id="address" type="textbox">
+      <input type="button" value="Geocode" onclick="codeAddress()">
+   
+
     
-    <script></script>
+
+	
+
+
+    
   </div>
+ 
 </div>
 
 <div id="latitude">
@@ -279,6 +355,8 @@ $longtitude = $row_getLoca['long'];
 echo htmlspecialchars($longtitude);
 ?>
 </div>
+
+<p>&nbsp;</p>
 </body></html>
 <?php
 mysql_free_result($getLoca);

@@ -4,6 +4,7 @@
 #map {
 	height: 60%;
 	width: 98%;
+	display: inline-block;
 }
 
 /* Tablet Layout: 481px to 768px. Inherits styles from: Mobile Layout. */
@@ -12,6 +13,7 @@
 	#map {
 	height: 75%;
 	width: 60%;
+	display:inline-block;
 }
 	
 	
@@ -23,6 +25,12 @@
 		#map {
 	height: 80%;
 	width: 60%;
+	display:inline-block;
 }
 	
+}
+#submitSection {
+	display: inline-block;
+	position: relative;
+	width: 30%;
 }

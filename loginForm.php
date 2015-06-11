@@ -41,13 +41,28 @@ if (isset($_SERVER['QUERY_STRING'])) {
 }
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "send")) {
-	/*send email & city variables via Session*/
 	
+	/*send email & city variables via Session*/
 	$_SESSION['email']=$_POST['email'];
 	$_SESSION['city']=$_POST['city'];
 	
 	/**/
 	
+	/*check for duplicate email-addresses*/
+	$userEmail = $_POST['email'];
+	mysql_select_db($database_My_Con, $My_Con);
+	$query_Recordset1 = "SELECT * FROM users WHERE Email = '$userEmail';";
+	$Recordset1 = mysql_query($query_Recordset1, $My_Con) or die(mysql_error());
+	$row_Recordset1 = mysql_fetch_assoc($Recordset1);
+	$totalRows_Recordset1 = mysql_num_rows($Recordset1);
+	
+	if ($totalRows_Recordset1){
+		echo "Email is already taken";
+		
+		
+		}else{
+
+	/**/
 	
 	
 	
@@ -73,13 +88,10 @@ $sendEncPass = md5($encPass);
     $insertGoTo .= $_SERVER['QUERY_STRING'];
   }
   header(sprintf("Location: %s", $insertGoTo));
+		}
 }
 
-mysql_select_db($database_My_Con, $My_Con);
-$query_Recordset1 = "SELECT * FROM users";
-$Recordset1 = mysql_query($query_Recordset1, $My_Con) or die(mysql_error());
-$row_Recordset1 = mysql_fetch_assoc($Recordset1);
-$totalRows_Recordset1 = mysql_num_rows($Recordset1);
+
 ?>
 
 
@@ -152,8 +164,8 @@ Do the following if you're using your customized build of modernizr (http://www.
                 
                 
             <p><span id="sprytextfield4">
-            <label for="email2">Email *
-              <input id="email2" type="text" name="email" value="" required>
+            <label for="email">Email *
+              <input id="email" type="text" name="email" value="" required>
             </label><br>
             <span class="textfieldRequiredMsg">Required.</span><span class="textfieldInvalidFormatMsg">Invalid format.</span>
             </span></p>
@@ -227,6 +239,4 @@ var sprytextfield4 = new Spry.Widget.ValidationTextField("sprytextfield4", "emai
 </script>
 </body>
 </html>
-<?php
-mysql_free_result($Recordset1);
-?>
+

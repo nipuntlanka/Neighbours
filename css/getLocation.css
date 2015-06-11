@@ -63,6 +63,13 @@ img, object, embed, video {
 	width: 100%;
 	display: block;
 }
+#submitSection {
+	clear: none;
+	float: left;
+	margin-left: 2.6785%;
+	width: 100%;
+	display: block;
+}
 
 /* Tablet Layout: 481px to 768px. Inherits styles from: Mobile Layout. */
 
@@ -97,6 +104,13 @@ img, object, embed, video {
 	clear: both;
 	float: left;
 	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#submitSection {
+	clear: none;
+	float: left;
+	margin-left: 1.6574%;
 	width: 100%;
 	display: block;
 }
@@ -138,6 +152,13 @@ img, object, embed, video {
 	clear: both;
 	float: left;
 	margin-left: 0;
+	width: 100%;
+	display: block;
+}
+#submitSection {
+	clear: none;
+	float: left;
+	margin-left: 1.0989%;
 	width: 100%;
 	display: block;
 }

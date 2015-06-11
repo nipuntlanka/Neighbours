@@ -1,5 +1,18 @@
 <?php require_once('Connections/My_Con.php'); ?>
 <?php
+// Start the session
+session_start();
+
+$email = $_SESSION['email'];
+$currLat = $_SESSION['currLat'];
+$currLong = $_SESSION['currLong'];
+
+echo $currLat;
+
+/**/
+
+
+
 if (!function_exists("GetSQLValueString")) {
 function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDefinedValue = "") 
 {
@@ -32,18 +45,11 @@ function GetSQLValueString($theValue, $theType, $theDefinedValue = "", $theNotDe
 }
 
 mysql_select_db($database_My_Con, $My_Con);
-$query_getCurrGrps = "SELECT * FROM groups WHERE grp_Id != 1";
+$query_getCurrGrps = "SELECT * FROM groups";
 $getCurrGrps = mysql_query($query_getCurrGrps, $My_Con) or die(mysql_error());
 $row_getCurrGrps = mysql_fetch_assoc($getCurrGrps);
 $totalRows_getCurrGrps = mysql_num_rows($getCurrGrps);mysql_select_db($database_My_Con, $My_Con);
-$query_getCurrGrps = "SELECT * FROM groups WHERE grp_id != 1";
-$getCurrGrps = mysql_query($query_getCurrGrps, $My_Con) or die(mysql_error());
-$row_getCurrGrps = mysql_fetch_assoc($getCurrGrps);
-$totalRows_getCurrGrps = mysql_num_rows($getCurrGrps);
-$query_getCurrGrps = "SELECT * FROM groups WHERE grp_id != 1";
-$getCurrGrps = mysql_query($query_getCurrGrps, $My_Con) or die(mysql_error());
-$row_getCurrGrps = mysql_fetch_assoc($getCurrGrps);
-$totalRows_getCurrGrps = mysql_num_rows($getCurrGrps);
+
 ?>
 
 <html>
@@ -51,9 +57,13 @@ $totalRows_getCurrGrps = mysql_num_rows($getCurrGrps);
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
     <title>PHP/MySQL & Google Maps Example</title>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBiGk8WenReo5hdM4-hK7ppcvAnsCLQUdc"></script>
     <script type="text/javascript">
-    //<![CDATA[
+	
+	var currLat = <?php echo json_encode($currLat); ?>;
+	var currLong = <?php echo json_encode($currLong); ?>;
+	
+    
 
     var customIcons = {
       restaurant: {
@@ -66,7 +76,7 @@ $totalRows_getCurrGrps = mysql_num_rows($getCurrGrps);
 
     function load() {
       var map = new google.maps.Map(document.getElementById("map"), {
-        center: new google.maps.LatLng(7.149154610187877,80.0600144412083),
+        center: new google.maps.LatLng(currLat,currLong),
         zoom: 15,
         mapTypeId: 'roadmap'
       });
@@ -85,7 +95,7 @@ $totalRows_getCurrGrps = mysql_num_rows($getCurrGrps);
 			  fillOpacity: 0.35,
 			  zIndex: 10,
 			  map: map,
-			  center: new google.maps.LatLng(7.149154610187877,80.0600144412083),
+			  center: new google.maps.LatLng(currLat,currLong),
 			  radius: 200,
 			  editable: true,
 			  draggable: true,
@@ -120,7 +130,7 @@ $totalRows_getCurrGrps = mysql_num_rows($getCurrGrps);
 		  
 		
 		  // Add an event listener on the cityCircle.
-		  google.maps.event.addListener(cityCircle, 'dragend', function(e){
+		  google.maps.event.addListener(cityCircle, 'drag', function(e){
 			 
 			 	
 				var locDetails1 = 'Center: '+ this.getCenter().toString();//+ '\n Bounds'+cityCircle.getBounds();
@@ -133,7 +143,7 @@ $totalRows_getCurrGrps = mysql_num_rows($getCurrGrps);
 			  
 		  });
 		    // Add an event listener on the dy_marker.
-		  google.maps.event.addListener(dy_marker, 'dragend', function(e){
+		  google.maps.event.addListener(dy_marker, 'drag', function(e){
 			 
 			 	
 				var locDetails1 = 'Center: '+ cityCircle.getCenter().toString();//+ '\n Bounds'+cityCircle.getBounds();
@@ -290,7 +300,7 @@ $totalRows_getCurrGrps = mysql_num_rows($getCurrGrps);
   </style>
   </head>
 
-  <body onload="load()">
+  <body onLoad="load()">
   
   <div class="currGrps" id="currGrps">
   <h2>List of Suggested Groups</h2>
@@ -299,7 +309,7 @@ $totalRows_getCurrGrps = mysql_num_rows($getCurrGrps);
     <?php
 do {  
 ?>
-    <option value="<?php echo $row_getCurrGrps['grp_name']?>"<?php if (!(strcmp($row_getCurrGrps['grp_name'], $row_getCurrGrps['grp_name']))) {echo "selected=\"selected\"";} ?>><?php echo $row_getCurrGrps['grp_name']?></option>
+    <option value="<?php echo $row_getCurrGrps['grp_name']?>"<?php if ((strcmp($row_getCurrGrps['grp_name'], $row_getCurrGrps['grp_name']))) {echo "selected=\"selected\"";} ?>><?php echo $row_getCurrGrps['grp_name']?></option>
     <?php
 } while ($row_getCurrGrps = mysql_fetch_assoc($getCurrGrps));
   $rows = mysql_num_rows($getCurrGrps);
